@@ -7,7 +7,8 @@ import java.util.NoSuchElementException;
  * A simple array-based stack.
  *
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Anthony Castleberry
+ * @author Richard Lin
  */
 public class LinkedQueue<T> implements Queue<T> {
   // +--------+----------------------------------------------------------
@@ -57,7 +58,9 @@ public class LinkedQueue<T> implements Queue<T> {
 
   @Override
   public void put(T val) throws Exception {
-    throw new Exception("Unimplemented");
+    Node<T> newnode = new Node<T>(val, this.back.next);
+    this.back.next = newnode;
+    this.back = newnode;  
   } // put(T)
 
   @Override
@@ -65,7 +68,9 @@ public class LinkedQueue<T> implements Queue<T> {
     if (this.isEmpty()) {
       throw new Exception("cannot get values from the empty queue");
     } // if empty
-    throw new Exception("Unimplemented");
+    T val = this.front.value;
+    this.front = this.front.next;
+    return val;
   } // get()
 
   @Override
