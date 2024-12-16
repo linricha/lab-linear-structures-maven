@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * A simple array-based stack.
+ * A simple linked-based queue.
  *
  * @author Samuel A. Rebelsky
  * @author Anthony Castleberry
@@ -53,30 +53,45 @@ public class LinkedQueue<T> implements Queue<T> {
 
   @Override
   public T peek() throws Exception {
+    if (this.isEmpty()) {
+      throw new Exception ("cannot get values from an empty queue")
+    } // if
     return this.front.value;
   } // peek()
 
   @Override
   public void put(T val) throws Exception {
-    Node<T> newnode = new Node<T>(val, this.back.next);
-    this.back.next = newnode;
-    this.back = newnode;  
+    Node<T> newnode = new Node<T>(val, null);
+
+    if (this.back != null) { // not empty queue
+
+      //reupdate
+      this.back.next = newnode;
+      this.back = this.back.next;
+      
+    } else { // if back is null then the queue is empty
+      // initialize the front and back of the queue.
+      this.front = newnode;
+      this.back = newnode;
+    } // if/else
   } // put(T)
 
   @Override
   public T get() throws Exception {
-    if (this.isEmpty()) {
-      throw new Exception("cannot get values from the empty queue");
-    } // if empty
+    if (this.isEmpty()) { // checks that queue is empty
+      throw new Exception("cannot get values from an empty queue");
+    } // if
+
+    // queue not empty so front is initialized
     T val = this.front.value; // store value
 
-    // equals null when queue has size of 1 node.
+    // equals null when queue has 1 node.
     this.front = this.front.next;
     
-    // if front and back are the same node (size = 1 node)
+    // if front and back are the same node (queue contains 1 node)
     if (this.front.equals(this.back)) {
       // update back to equal front since both will be null
-      // if size = 1 node.
+      // if queue has 1 node.
       this.back = this.front;
     } // if
     
