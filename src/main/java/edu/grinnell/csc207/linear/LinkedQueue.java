@@ -84,16 +84,19 @@ public class LinkedQueue<T> implements Queue<T> {
 
     // queue not empty so front is initialized
     T val = this.front.value; // store value
-
-    // equals null when queue has 1 node.
-    this.front = this.front.next;
+    
     
     // if front and back are the same node (queue contains 1 node)
     if (this.front.equals(this.back)) {
       // update back to equal front since both will be null
       // if queue has 1 node.
-      this.back = this.front;
+      this.back = null;
     } // if
+
+    // equals null when queue has 1 node.
+    this.front = this.front.next;
+
+    // i.e. both front and back should be null when queue has 1 node.
     
     return val;
   } // get()
